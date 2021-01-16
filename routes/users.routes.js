@@ -7,7 +7,7 @@ router
 
     .get('/', controller.get)
     .post('/', controller.add)
-    .put('/', controller.rewrite)
+    .put('/:id', controller.rewrite)
     .delete('/:id', controller.delete)
 
 module.exports = router;

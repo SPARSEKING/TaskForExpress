@@ -20,7 +20,7 @@ class UsersController {
     rewrite = (req, res) => {
         res 
             .status(200)
-            .send(this.service.rewriteUsers(req.body))
+            .send(this.service.update(req.body, req.params.id))
     }
 
     delete = (req, res) => {

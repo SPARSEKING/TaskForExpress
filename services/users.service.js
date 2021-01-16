@@ -20,25 +20,39 @@ class UsersService {
     ]
 
     getUsers = () => {
-        this.writeFile();
+        this.readFile();
         return this.usersList;
     }
 
     addUser = (user) => {
+        this.readFile();
         this.usersList.push(user);
         this.writeFile();
         return this.usersList;
     }
 
-    rewriteUsers = (userList) => {
-        this.usersList = userList;
+    update = (dataToUpdate, id) => {
+        this.readFile();
+        const index  = this.usersList.findIndex(user => user.id === id);
+        this.usersList[index] = {
+            ...this.usersList[index],
+            ...dataToUpdate,
+        }
         this.writeFile();
         return this.usersList;
     }
 
     deleteUser = (id) => {
+        this.readFile();
         this.usersList = this.usersList.filter(user => user.id !== id)
         this.writeFile();
+        return this.usersList;
+    }
+
+    readFile = () => {
+        let fileData = fs.readFileSync(filePath);
+        let storageUsers = JSON.parse(fileData);
+        this.usersList = storageUsers;
         return this.usersList;
     }
 
