@@ -5,10 +5,10 @@ const filePath = path.join(__dirname, 'files', 'text.json' );
 
 class UsersService {
     constructor() {
-        this.fileData = fs.readFileSync(filePath);
-        this.storageUsers = JSON.parse(this.fileData);
-        this.usersList = this.storageUsers;
+       const fileData = fs.readFileSync(filePath);
+        this.usersList = JSON.parse(fileData);
     }
+    
     usersList = [
         {
             id: '1',
