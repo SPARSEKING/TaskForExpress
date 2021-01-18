@@ -1,5 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const keys = require('./config/keys.js');
+const User = require('../models/User.js');
 
 const filePath = path.join(__dirname, 'files', 'text.json' );
 
@@ -9,23 +13,11 @@ class UsersService {
         this.usersList = JSON.parse(fileData);
     }
     
-    usersList = [
-        {
-            id: '1',
-            name: 'Kirill'
-        },
-        {
-            id: '2',
-            name: 'Slava'
-        },
-        {
-            id: '3',
-            name: 'Kostya'
-        },
-    ]
+    usersList = []
 
-    getUsers = () => {
-        return this.usersList;
+    getUsers = async () => {
+        const users = await User.find();
+        return users;
     }
 
     addUser = (user) => {
@@ -56,6 +48,30 @@ class UsersService {
                 throw err
             }
         })
+    }
+
+    login = async (login, password) => {
+        const candidate = await User.findOne({ login: login})
+        const passwordResult = bcrypt.hashSync(password, candidate.password);
+        if (passwordResult) {
+
+            const token = jwt.sign({
+                login: candidate.login,
+                userId: candidate._id
+            }, keys.jwt, {expiresIn: 60 * 60})
+        }
+    }
+
+    register = async (login, password) => {
+        const salt = bcrypt.genSaltSync(10);
+        const pasword = password;
+        const user = new User({
+            login: login,
+            password: bcrypt.hashSync(pasword, salt)
+        })
+
+        await user.save();
+        
     }
 }
 
