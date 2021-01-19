@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const createError = require('http-errors');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys.js');
@@ -12,8 +13,13 @@ class UsersService {
 
     update = async (login, password, id) => {
         const salt = await bcrypt.genSalt(10);
+        const candidate = await User.findOne({ login: login})
+        if (!candidate) {
         const updateUser =  await User.updateOne({ login: id}, {$set:{ login: login, password: await bcrypt.hash(password, salt)}});
         return updateUser;
+        } else {
+        return createError(409, 'Пользователь с таким логином уже существует.');
+        }
     }
 
     deleteUser = async (login) => {
