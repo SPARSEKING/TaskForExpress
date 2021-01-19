@@ -28,10 +28,9 @@ class UsersService {
 
     register = async (login, password) => {
         const salt = await bcrypt.genSalt(10);
-        const pasword = password;
         const user = new User({
             login: login,
-            password:await bcrypt.hash(pasword, salt)
+            password:await bcrypt.hash(password, salt)
         })
         await user.save();
         return user;
