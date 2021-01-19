@@ -9,6 +9,12 @@ class UsersController {
             .json(await this.service.getUsers())
     }
 
+    update = (req, res) => {
+        res 
+            .status(200)
+            .send(this.service.update(req.body.login, req.body.password, req.params.id))
+    }
+
     delete = async (req, res) => {
             res
             .status(200)

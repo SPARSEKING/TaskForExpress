@@ -10,6 +10,12 @@ class UsersService {
         return users;
     }
 
+    update = async (login, password, id) => {
+        const salt = await bcrypt.genSalt(10);
+        const updateUser =  await User.updateOne({ login: id}, {$set:{ login: login, password: await bcrypt.hash(password, salt)}});
+        return updateUser;
+    }
+
     deleteUser = async (login) => {
         const candidate = await User.findOne({ login: login})
         if (candidate) {
@@ -18,7 +24,6 @@ class UsersService {
         } else {
             return createError(404, 'Пользователь с таким логином не найден.');
         }
-         
     }
 
     login = async (login, password) => {

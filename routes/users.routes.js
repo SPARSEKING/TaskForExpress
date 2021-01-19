@@ -2,13 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const controller = require('../controllers/users.controller');
-const authMiddleware = require('../middlewares/authMiddleware.js');
+const authMiddleware = require('../middlewares/auth.middleware.js');
+const validationMiddleware = require('../middlewares/validation.middleware.js');
+const createUserScheme = require('../validation-schemes/create-user.scheme.js');
 
 router
 
     .get('/',authMiddleware, controller.get)
-    .post('/', controller.register)
+    .post('/',validationMiddleware(createUserScheme), controller.register)
     .delete('/', controller.delete)
     .post('/login', controller.login)
+    .put('/:id', controller.update)
 
 module.exports = router;
