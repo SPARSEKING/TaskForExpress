@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const controller = require('../controllers/users.controller');
+const authMiddleware = require('../middlewares/authMiddleware.js');
 
 router
 
-    .get('/', controller.get)
-    .post('/', controller.add)
-    .put('/:id', controller.rewrite)
-    .delete('/:id', controller.delete)
+    .get('/',authMiddleware, controller.get)
+    .post('/', controller.register)
+    .delete('/', controller.delete)
     .post('/login', controller.login)
-    .post('/registration', controller.register)
 
 module.exports = router;
