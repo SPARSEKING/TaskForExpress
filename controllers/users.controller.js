@@ -9,28 +9,28 @@ class UsersController {
             .json(await this.service.getUsers())
     }
 
-    update = (req, res) => {
+    update = async (req, res) => {
         res 
             .status(200)
-            .send(this.service.update(req.body.login, req.body.password, req.params.id))
+            .send(await this.service.update(req.body, req.params.id))
     }
 
     delete = async (req, res) => {
             res
             .status(200)
-            .send(await this.service.deleteUser(req.body.login))
+            .send(await this.service.deleteUser(req.params.id))
     }
 
     login = async (req, res) => {
             res 
             .status(200)
-            .send(await this.service.login(req.body.login, req.body.password))
+            .send(await this.service.login(req.body))
     }
 
     register = async (req, res) => {
             res 
             .status(201)
-            .json(await this.service.register(req.body.login, req.body.password))
+            .json(await this.service.register(req.body))
     }
 }
 

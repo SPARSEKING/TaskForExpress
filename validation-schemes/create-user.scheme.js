@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const creatUserScheme = Joi.object({
+const createUserScheme = Joi.object({
     login: Joi.string()
         .alphanum()
         .min(3)
@@ -12,4 +12,4 @@ const creatUserScheme = Joi.object({
 })
     .with('login', 'password');
 
-module.exports = creatUserScheme;
+module.exports = createUserScheme;

@@ -1,15 +1,13 @@
 const Joi = require('joi');
 
-const creatUserScheme = Joi.object({
+const updateUserScheme = Joi.object({
     login: Joi.string()
         .alphanum()
         .min(3)
-        .max(30)
-        .required(),
+        .max(30),
 
     password: Joi.string()
         .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
 })
-    .with('login', 'password');
 
-module.exports = creatUserScheme;
+module.exports = updateUserScheme;
