@@ -11,7 +11,7 @@ router
 
     .get('/',authMiddleware, controller.get)
     .post('/',validationMiddleware(createUserScheme), controller.register)
-    .delete('/', controller.delete)
+    .delete('/:id', controller.delete)
     .post('/login', controller.login)
     .put('/:id',validationMiddleware(updateUserScheme), controller.update)
 
