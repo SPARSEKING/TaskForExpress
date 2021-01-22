@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys.js');
-// const User = require('../models/User.js');
-const User = require('../models/User-sequelize.js');
+const User = require('../models/User.js');
 
 module.exports =  async function (req, res, next) {
     try {
@@ -12,7 +11,7 @@ module.exports =  async function (req, res, next) {
             })
         }
             const decodeData = jwt.verify(token, keys.jwt)
-            if(await User.findOne({ where: { login: decodeData.login }})) {
+            if(await User.findOne({ login: decodeData.login })) {
                 req.user = decodeData;
                 next();
             } else {

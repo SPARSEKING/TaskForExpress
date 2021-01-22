@@ -11,9 +11,9 @@ const upload = require('../middlewares/upload.js');
 router
 
     .get('/', authMiddleware, controller.get)
-    .post('/', upload.single('image'), controller.register)
+    .post('/',validationMiddleware(createUserScheme), upload.single('image'), controller.register)
     .delete('/:id', controller.delete)
     .post('/login', controller.login)
-    .put('/:id', upload.single('image'), controller.update)
+    .put('/:id',validationMiddleware(updateUserScheme), upload.single('image'), controller.update)
 
 module.exports = router;
