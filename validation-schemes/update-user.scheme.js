@@ -8,6 +8,8 @@ const updateUserScheme = Joi.object({
 
     password: Joi.string()
         .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+        
+    image: Joi.string()
 })
 
 module.exports = updateUserScheme;

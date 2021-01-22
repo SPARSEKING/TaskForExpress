@@ -23,7 +23,7 @@ class UsersService {
             return updateUser;
         } else {
             // const updateUser =  await User.updateOne({ _id: id}, {$set:{ login: updateData.login, password: await bcrypt.hash(updateData.password, salt)}});
-            const updateUser =  await User.update({ login: updateData.login, password: await bcrypt.hash(updateData.password, salt)}, { where : { id: id }});
+            const updateUser =  await User.update({ login: updateData.login, password: await bcrypt.hash(updateData.password, salt), image: filePath}, { where : { id: id }});
             return updateUser;
         }
     }
@@ -51,20 +51,23 @@ class UsersService {
         }
     }
 
-    register = async (newUser) => {
+    register = async (newUser, file, filePath) => {
         const salt = await bcrypt.genSalt(10);
         // const user = new User({
         //     login: newUser.login,
-        //     password:await bcrypt.hash(newUser.password, salt)
+        //     password:await bcrypt.hash(newUser.password, salt),
+        //     image: file ? path: ''
         // })
+        // console.log(path)
         // await user.save();
+        // return user;
 
        return await User.create({
             login: newUser.login,
-            password: await bcrypt.hash(newUser.password, salt)
+            password: await bcrypt.hash(newUser.password, salt),
+            image: file ? filePath : ''
         })
     }
 }
-
 
 module.exports = new UsersService();

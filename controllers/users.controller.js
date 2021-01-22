@@ -12,7 +12,7 @@ class UsersController {
     update = async (req, res) => {
         res 
             .status(200)
-            .send(await this.service.update(req.body, req.params.id))
+            .json(await this.service.update(req.body, req.params.id))
     }
 
     delete = (req, res) => {
@@ -30,7 +30,7 @@ class UsersController {
     register = async (req, res) => {
             res 
             .status(201)
-            .json(await this.service.register(req.body))
+            .json(await this.service.register(req.body, req.file, req.file.path))
     }
 }
 

@@ -1,5 +1,5 @@
 const express = require('express');
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const { Sequelize } = require('sequelize');
 const bodyParser = require('body-parser');
 const userRoute = require('./routes/users.routes');
@@ -14,6 +14,8 @@ database.authenticate()
 // mongoose.connect(keys.mongoURI)
 
 app.use(bodyParser.json());
+
+app.use('/uploads', express.static('uploads'));
 
 app.use('/auth', userRoute);
 

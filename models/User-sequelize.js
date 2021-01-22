@@ -9,6 +9,10 @@ const User = database.define('Users', {
     },
     password: {
         type: DataTypes.STRING
+    },
+    image: {
+        type: DataTypes.STRING,
+        defaultValue: ''
     }
 })
 
