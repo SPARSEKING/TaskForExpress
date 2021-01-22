@@ -15,10 +15,10 @@ class UsersController {
             .send(await this.service.update(req.body, req.params.id))
     }
 
-    delete = async (req, res) => {
+    delete = (req, res) => {
             res
             .status(200)
-            .send(await this.service.deleteUser(req.params.id))
+            .send(this.service.deleteUser(req.params.id))
     }
 
     login = async (req, res) => {
