@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const keys = require('../config/keys.js');
+const { hashSync } = require('bcryptjs');
 const database = new Sequelize(keys.postgresURI);
 
 const User = database.define('Users', {
@@ -8,7 +9,10 @@ const User = database.define('Users', {
         unique: true
     },
     password: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        set(value) {
+            this.setDataValue('password', hashSync(value))
+        }
     },
     image: {
         type: DataTypes.STRING,

@@ -30,7 +30,7 @@ class UsersController {
     register = async (req, res) => {
             res 
             .status(201)
-            .json(await this.service.register(req.body, req.file, req.file.path))
+            .send(await this.service.register(req.body, req.file, req.file.path))
     }
 }
 
